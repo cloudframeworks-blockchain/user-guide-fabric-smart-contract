@@ -10,7 +10,7 @@
 
 智能合约是将具体条款以计算机语言而非法律语言记录的智能化合同，运行在区块链的多个节点上（分布式环境），新建/调用都由区块链的**Transactions**触发。根据事件描述信息中包含的触发条件，智能合约在条件满足时自动发出预设的数据资源以及包括触发条件的事件，让一组复杂的、带有触发条件的数字化承诺能够按照参与者的意志，正确执行。
  
-目前主流智能合约设计包括[Ethereum](https://www.ethereum.org/)和[Fabric](https://www.ibm.com/blockchain/hyperledger.html)。其中Fabric即IBM HyperLedger，采用Go和Java实现，运行于Docker中，可支持业务复杂度更高。
+目前主流智能合约设计包括**[Ethereum](https://www.ethereum.org/)**和**[Fabric](https://www.ibm.com/blockchain/hyperledger.html)**。其中Fabric即IBM HyperLedger，采用Go和Java实现，运行于Docker中，可支持业务复杂度更高。
 
 本篇[云框架](ABOUT.md)将以xx为例，提供**基于区块链的智能合约**的最佳实践。
 
@@ -30,9 +30,11 @@
 
 # <a name="框架说明-业务"></a>框架说明-业务
 
-# <a name="框架说明-组件"></a>框架说明-组件
+<div align=center><img width="900" height="" src="./image/transaction-flow.png"/></div>
 
-# <a name="如何变成自己的项目"></a>如何变成自己的项目
+<div align=center><img width="900" height="" src="./image/transaction-flow-details.png"/></div>
+
+# <a name="框架说明-组件"></a>框架说明-组件
 
 # <a name="更新计划"></a>更新计划
 
