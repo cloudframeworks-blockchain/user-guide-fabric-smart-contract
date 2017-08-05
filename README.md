@@ -45,26 +45,37 @@ docker-compose部署步骤@pujielan
 
 # <a name="框架说明-业务"></a>框架说明-业务
 
-业务场景介绍@pujielan
+1.业务场景介绍@pujielan
 
-注册、初始捐款
+2.注册、初始捐款
 
-增加捐款额
+3.增加捐款额
 
-查询账户信息
+4.查询账户信息
 
-捐款（随机／指定捐款）
+5.捐款（随机／指定捐款）
 
-查询捐款记录  
+6.查询捐款记录  
 
-查询余额信息
+7.查询余额信息
 
 
 业务架构图@pujielan
+本例所示暂未使用fabric—ca组件
+完整的Hyperledger Fabric1.0结构如下：
+
+https://pic3.zhimg.com/v2-01893d3f2a9aab6dcc4e9982ba68de8e_r.png
+
 
 业务架构图说明@pujielan 
 
+1. order
+2. peer
+3. cli
+
 # <a name="框架说明-组件"></a>框架说明-组件
+调用说明
+https://pic2.zhimg.com/v2-0e23165fc571eddda56390206990ba39_r.png
 
 组件／模块架构图@pujielan
 
