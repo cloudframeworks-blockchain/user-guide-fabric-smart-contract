@@ -73,7 +73,7 @@ docker-compose部署步骤@pujielan
 2. peer
 3. cli
 
-## 事务前的操作说明
+## 事务操作前已经预先执行的部分
 1. 启动链码(chaincode)
 此步骤在docker-compose执行时即执行于chaincode容器之中
 执行的命令为：
@@ -95,7 +95,7 @@ peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
 peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
 ```
 
-## 事物执行过程：
+## 事务执行过程：
 页面调用执行以'''捐款人-->捐资'''为例时，后端调用的命令如下：
 
 ```
@@ -111,7 +111,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 4. Ordering服务节点执行共识过程并生成block，通过消息通道发布给Peer节点，由peer节点各自验证交易并提交到本地的ledger中（包括state状态的变化）
 
 
-## 事物调用说明
+## 事务调用示意图
 ![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
 
 组件／模块架构图说明@pujielan
