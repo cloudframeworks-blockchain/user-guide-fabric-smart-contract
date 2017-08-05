@@ -30,9 +30,35 @@
 
 docker-compose部署步骤@pujielan
 
+## 本地部署
+1. [准备docker-compose环境]
+2. 进入项目下的charity目录
+
+    ```
+    cd user-guide-blockchain/charity
+    ```
+3. 运行docker-compose
+
+    ```
+    docker-compose -f docker-charity.yml up -d
+    ```
+
 # <a name="框架说明-业务"></a>框架说明-业务
 
 业务场景介绍@pujielan
+
+注册、初始捐款
+
+增加捐款额
+
+查询账户信息
+
+捐款（随机／指定捐款）
+
+查询捐款记录  
+
+查询余额信息
+
 
 业务架构图@pujielan
 
