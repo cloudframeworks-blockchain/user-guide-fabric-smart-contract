@@ -101,7 +101,7 @@ peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
 ```
 peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C myc
 ```
-![](image)
+![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/running.png)
 
 流程如下：
 
