@@ -129,6 +129,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 
 # <a name="如何变成自己的项目">如何变成自己的项目
 
+1. 编写自己的链码程序
 转变为自己的项目，就是重新更换链码,需要根据自己的具体业务进行链码文件的编写。下面看一下链码文件中的代码结构
 
 * 关键的引用：
@@ -164,7 +165,33 @@ func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
 	return shim.Error("Invalid function name.")
 }
 ```
-作用于invoke调用时，对参数的处理。例如<code>-c '{"Args":["donation", "xxxx", "2000"]}'</code>中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
+作用于invoke调用时，对参数的处理。例如**-c '{"Args":["donation", "xxxx", "2000"]}'**中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
+
+2. 把链码放置到容器中
+下载go环境镜像，编译链码，推荐本例中使用的name为chaincode的镜像进行
+
+```
+docker exec -it chaincode bash
+cd $yourProj
+go build
+```
+3. 修改docker-charity.yml文件
+* cli的entrypoint指令, 指定为你个人的chaincode
+* peer中的entrypoint指令,指定安装以及实例化你个人的chaincode
+
+3. 重新运行docker-compose文件
+
+```
+docker-composer -f docker-charity.yml up -d
+```
+4. 完成
+登入cli容器中，可以进行命令操作了
+
+5. webserver
+如果想要使用webserver接入，推荐使用java或者node来进行。
+因为虽然fabric项目由go开发，但是其本身并未提供go sdk... **[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)**，本例中的案例是调用了shell完成的处理并为进行go sdk的包装，或者推荐如下两go sdk项目以供参考：
+**[go sdk 1](https://github.com/hyperledger/fabric-sdk-go)**和**[go sdk 2](https://github.com/CognitionFoundry/gohfc)**
+
 
 # <a name="更新计划"></a>更新计划
 
