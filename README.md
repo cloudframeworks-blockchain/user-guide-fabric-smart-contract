@@ -73,29 +73,98 @@ docker-compose部署步骤@pujielan
 2. peer
 3. cli
 
-# <a name="框架说明-组件"></a>框架说明-组件
-## 调用说明
-![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
+## 事务前的操作说明
+1. 启动链码(chaincode)
+此步骤在docker-compose执行时即执行于chaincode容器之中
+执行的命令为：
 
-组件／模块架构图@pujielan
+```
+CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 ./charity
+```
+在此阶段，链码与任何channel都不相关, 需要在后续步骤中使用实例化
+
+2. 安装链码与实例化
+此步骤在docker-composer执行时即执行于cli容器之中,使用默认通道myc
+执行的命令为：
+
+```
+peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
+```
+
+```
+peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
+```
+
+## 事物执行过程：
+页面调用执行以'''捐款人-->捐资'''为例时，后端调用的命令如下：
+
+```
+peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C myc
+```
+![](image)
+
+流程如下：
+
+1. 应用程序请求道Peer节点（一个或多个）
+2. peer节点分别执行交易（通过chaincode），但是并不将执行结果提交到本地的账本中（可以认为是模拟执行，交易处于挂起状态），参与背书的peer将执行结果返回给应用程序（其中包括自身对背书结果的签名）
+3. 应用程序 收集背书结果并将结果提交给Ordering服务节点
+4. Ordering服务节点执行共识过程并生成block，通过消息通道发布给Peer节点，由peer节点各自验证交易并提交到本地的ledger中（包括state状态的变化）
+
+
+## 事物调用说明
+![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
 
 组件／模块架构图说明@pujielan
 
-## 组件／模块1
+## 组件／peer
 
-与业务结合解释组件／模块1@pujielan
 
-## 组件／模块2
 
-与业务结合解释组件／模块2@pujielan
+## 组件／orderer
 
-## 组件／模块3
 
-与业务结合解释组件／模块3@pujielan
+
+## 组件／cli
+
 
 # <a name="如何变成自己的项目">如何变成自己的项目
 
-变成自己项目需要改哪，怎么改，改完怎么部署@pujielan
+转变为自己的项目，就是重新更换链码,需要根据自己的具体业务进行链码文件的编写。下面看一下链码文件中的代码结构
+
+* 关键的引用：
+
+```
+"github.com/hyperledger/fabric/core/chaincode/shim"
+"github.com/hyperledger/fabric/protos/peer"
+```
+
+* func Init：
+
+```
+func (s *SmartContract) Init(api shim.ChaincodeStubInterface) peer.Response {
+	return shim.Success(nil)
+}
+```
+该方法作用于实例化链码时
+
+* 方法判断, func Invoke：
+
+```
+func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
+
+	function, args := api.GetFunctionAndParameters()
+
+	switch function {
+	case "donation":
+		return s.donation(api, args)
+	case "queryDealOnce":
+		...
+	}
+
+	return shim.Error("Invalid function name.")
+}
+```
+作用于invoke调用时，对参数的处理。例如<code>-c '{"Args":["donation", "xxxx", "2000"]}'</code>中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
 
 # <a name="更新计划"></a>更新计划
 
