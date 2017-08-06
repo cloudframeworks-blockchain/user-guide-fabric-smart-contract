@@ -59,9 +59,11 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./msp:/etc/hyperledger/msp
-        - ./../api_chraity:/opt/gopath/src/api_charity
+        - ./../api_charity:/opt/gopath/src/api_charity
         - ./../chaincode:/opt/gopath/src/chaincodedev/chaincode
         - ./:/opt/gopath/src/chaincodedev/
+    ports:
+      - 8080:8080
     depends_on:
       - orderer
       - peer
