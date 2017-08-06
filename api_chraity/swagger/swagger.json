@@ -1,0 +1,285 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Charity Block Chain API",
+        "description": "fabric block chain. charity system",
+        "version": "1.0.0",
+        //"termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "astaxie@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/donation/": {
+            "post": {
+                "tags": [
+                    "donation"
+                ],
+                "description": "input user and account",
+                "operationId": "DonationController.donationMoneyFromUser",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "account",
+                        "description": "user account",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Donation"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "money",
+                        "description": "donation money",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/.money"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.CharityUser"
+                        }
+                    },
+                    "403": {
+                        "description": "Donation user account error"
+                    }
+                }
+            }
+        },
+        "/donationRules/": {
+            "post": {
+                "tags": [
+                    "donationRules"
+                ],
+                "description": "input user  donation models and direction",
+                "operationId": "DonationRulsController.donation rules",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "account",
+                        "description": "user account",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "model",
+                        "description": "donation model",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "Direction",
+                        "description": "donation to",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.RcRules"
+                        }
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/querydealall/": {
+            "post": {
+                "tags": [
+                    "querydealall"
+                ],
+                "description": "input username",
+                "operationId": "QueryALLController.Query all of user's transaction record",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "account",
+                        "description": "user account",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/.QueryALLRecords"
+                        }
+                    },
+                    "403": {
+                        "description": "query args is empty"
+                    }
+                }
+            }
+        },
+        "/querydealonce/": {
+            "post": {
+                "tags": [
+                    "querydealonce"
+                ],
+                "description": "input user and record number",
+                "operationId": "QueryOnceController.query user s once record",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "account",
+                        "description": "user account",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "nums",
+                        "description": "record numbs",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.CharityNote"
+                        }
+                    },
+                    "403": {
+                        "description": "args is empty"
+                    }
+                }
+            }
+        },
+        "/queryuserinfo/": {
+            "post": {
+                "tags": [
+                    "queryuserinfo"
+                ],
+                "description": "show user info",
+                "operationId": "UserInfoController.Show user info",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "account",
+                        "description": "user account",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.CharityUser"
+                        }
+                    },
+                    "403": {
+                        "description": "query args is empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        ".QueryALLRecords": {
+            "type": "object"
+        },
+        ".money": {
+            "type": "object"
+        },
+        "models.CharityNote": {
+            "title": "CharityNote",
+            "type": "object",
+            "properties": {
+                "costMoney": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "direction": {
+                    "type": "string"
+                },
+                "donationName": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CharityUser": {
+            "title": "CharityUser",
+            "type": "object",
+            "properties": {
+                "allMoney": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "dealNumbers": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "donationName": {
+                    "type": "string"
+                },
+                "leftMoney": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "models.Donation": {
+            "title": "Donation",
+            "type": "object",
+            "properties": {
+                "Money": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.RcRules": {
+            "title": "RcRules",
+            "type": "object",
+            "properties": {
+                "CNotes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CharityNote"
+                    }
+                },
+                "CUser": {
+                    "$ref": "#/definitions/models.CharityUser"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "donation",
+            "description": "Operations about Donation\n"
+        },
+        {
+            "name": "querydealonce",
+            "description": "Operations query once\n"
+        },
+        {
+            "name": "querydealall",
+            "description": "Query user s all record\n"
+        },
+        {
+            "name": "queryuserinfo",
+            "description": "Operations show user s info\n"
+        },
+        {
+            "name": "donationRules",
+            "description": "Operations donation rules\n"
+        }
+    ]
+}
