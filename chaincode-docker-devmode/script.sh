@@ -22,5 +22,8 @@ peer channel join -b myc.block
 
 #we should have bailed if above commands failed.
 #we are here, so they worked
+CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 /opt/gopath/src/chaincodedev/chaincode/charity/charity &
+peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
+peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
 sleep 600000
 exit 0

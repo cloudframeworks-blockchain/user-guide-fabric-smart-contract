@@ -1,0 +1,11 @@
+FROM hyperledger/fabric-tools:x86_64-1.0.0
+
+RUN go get -u github.com/astaxie/beego && \
+        go get -u github.com/beego/bee 
+
+EXPOSE 8080
+
+WORKDIR ${GOPATH}/src/api_charity
+
+CMD bee run 
+

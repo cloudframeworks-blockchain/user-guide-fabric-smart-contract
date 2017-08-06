@@ -44,7 +44,7 @@ services:
 
   cli:
     container_name: cli
-    image: hyperledger/fabric-tools:x86_64-1.0.0
+    image: pujielan/fabric_cli:x86_64-1.0.0
     tty: true
     environment:
       - GOPATH=/opt/gopath
@@ -55,10 +55,11 @@ services:
       - CORE_PEER_LOCALMSPID=DEFAULT
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     working_dir: /opt/gopath/src/chaincodedev
-    command: /bin/bash -c './script.sh'
+    command: /bin/bash -c './script.sh' 
     volumes:
         - /var/run/:/host/var/run/
         - ./msp:/etc/hyperledger/msp
+        - ./../api_chraity:/opt/gopath/src/api_charity
         - ./../chaincode:/opt/gopath/src/chaincodedev/chaincode
         - ./:/opt/gopath/src/chaincodedev/
     depends_on:
