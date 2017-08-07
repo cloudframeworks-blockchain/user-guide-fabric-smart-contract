@@ -56,7 +56,7 @@
 
 5. 访问
 
-    @pujielan
+    http://127.0.0.1:8080/swagger
 
 # <a name="业务说明"></a>业务说明
 
@@ -73,7 +73,7 @@
 
 业务架构如下图所示：
 
-@pujielan
+![](https://github.com/cloudframeworks-blockchain/user-guide-fabric-smart-contract/blob/master/image/business.jpeg)
 
 # <a name="框架说明"></a>框架说明
 
@@ -87,12 +87,17 @@
     CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 ./charity
     ```
 
-2. 安装链码与实例化，执行于cli容器中，使用默认通道myc，命令如下：
+2. 安装链码与实例化，执行于cli容器中，使用通道myc，命令如下：
 
+    ```
+    peer channel create -c myc -f myc.tx -o orderer:7050
+    ```
+    ```
+    peer channel join -b myc.block
+    ```
     ```
     peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
     ```
-
     ```
     peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
     ```
@@ -101,13 +106,48 @@
 
 本例中包含<a name="事务命令"></a>事务命令如下：
 
-@pujielan 命令列举
+事务命令可以组合，例如
 
-事务命令可以组合，例如执行捐款人（mike）捐献（donation）资金（2000）时，后段调用命令如下：
+执行捐款人（mike）捐献（donation）资金（2000）时，后段调用命令如下：
 
 ```
 peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "2000"]}' -C myc
 ```
+查询捐款人(mike)账户信息
+
+```
+peer chaincode invoke -n charity -c '{"Args":["queryUserInfo", "mike"]}' -C myc
+```
+捐款人(mike)发生捐款指定捐赠“希望小学”
+
+```
+peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","assign", "Hope_ Primary_School"]}' -C myc
+```
+
+捐款人(mike)随机选款，由慈善机构的合约进行选择捐赠
+
+```
+peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","random"]}' -C myc
+```
+
+捐款人(mike)查询的捐款次数和去向
+
+```
+peer chaincode invoke -n charity -c '{"Args":["queryDealALL", "mike"]}' -C myc
+```
+
+捐款人(mike)查询自己的第2次捐款去向
+
+```
+peer chaincode invoke -n charity -c '{"Args":["queryDealOnce", "mike", "2"]}' -C myc
+```
+
+捐款人(mike)追加捐款40000元
+
+```
+peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "40000"]}' -C myc
+```
+
 
 具体流程见下图：
 
