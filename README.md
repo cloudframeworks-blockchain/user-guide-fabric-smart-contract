@@ -10,9 +10,9 @@
 
 智能合约是将具体条款以计算机语言而非法律语言记录的智能化合同，运行在区块链的多个节点上（分布式环境），新建/调用都由区块链的**Transactions**触发。根据事件描述信息中包含的触发条件，智能合约在条件满足时自动发出预设的数据资源以及包括触发条件的事件，让一组复杂的、带有触发条件的数字化承诺能够按照参与者的意志，正确执行。
  
-目前主流智能合约设计包括**[Ethereum](https://www.ethereum.org/)**和**[Fabric](https://www.ibm.com/blockchain/hyperledger.html)**。其中Fabric即IBM HyperLedger，采用Go和Java实现，运行于Docker中，可支持业务复杂度更高。
+目前主流智能合约设计包括[Ethereum](https://www.ethereum.org/)和[Fabric](https://www.ibm.com/blockchain/hyperledger.html)。其中**Fabric**即IBM HyperLedger，采用Go和Java实现，运行于Docker中，可支持业务复杂度更高。
 
-本篇[云框架](ABOUT.md)将以xx为例，提供**基于区块链的智能合约**的最佳实践。
+本篇[云框架](ABOUT.md)将以**基于Fabric的慈善捐款智能合约**为例，提供**基于区块链的智能合约**的最佳实践。
 
 # 内容概览
 
@@ -28,16 +28,26 @@
 
 # <a name="快速部署"></a>快速部署
 
-docker-compose部署步骤@pujielan
+## 一键部署
+
+[一键部署至好雨云帮]()
 
 ## 本地部署
-1. [准备docker-compose环境]
-2. 进入项目下的charity目录
+
+1. [准备Docker环境]()
+2. 克隆完整代码
+ 
+    ```
+    git clone 
+    ```
+    
+3. 进入项目下的charity目录
 
     ```
     cd user-guide-blockchain/charity
     ```
-3. 运行docker-compose
+    
+4. 使用docker-compose运行如下命令
 
     ```
     docker-compose -f docker-charity.yml up -d
@@ -45,58 +55,56 @@ docker-compose部署步骤@pujielan
 
 # <a name="框架说明-业务"></a>框架说明-业务
 
-##业务场景介绍@pujielan
+利用区块链技术实现智能合约，某慈善机构将原有捐款流程改造为透明、易追溯的智能捐款系统，可完成以下事务——
 
 1. 注册、初始捐款
-
 2. 增加捐款额
-
 3. 查询账户信息
-
 4. 捐款（随机／指定捐款）
-
 5. 查询捐款记录  
-
 6. 查询余额信息
 
-
-业务架构图@pujielan
-本例所示暂未使用fabric—ca组件
-完整的Hyperledger Fabric1.0结构如下：
+业务架构如下图所示：
 
 ![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric_struct.png)
 
+* 完整的Hyperledger Fabric1.0结构
+* 暂未使用favric-ca插件
+* order
+* peer
+* cli
 
-业务架构图说明@pujielan 
+# <a name="框架说明-模块"></a>框架说明-模块
 
-1. order
-2. peer
-3. cli
+## 预执行模块
 
-## 事务操作前已经预先执行的部分
 1. 启动链码(chaincode)
-此步骤在docker-compose执行时即执行于chaincode容器之中
-执行的命令为：
 
-```
-CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 ./charity
-```
-在此阶段，链码与任何channel都不相关, 需要在后续步骤中使用实例化
+    此步骤在docker-compose执行时即执行于chaincode容器之中
+    执行的命令为：
+
+    ```
+    CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 ./charity
+    ```
+    
+    在此阶段，链码与任何channel都不相关, 需要在后续步骤中使用实例化
 
 2. 安装链码与实例化
-此步骤在docker-composer执行时即执行于cli容器之中,使用默认通道myc
-执行的命令为：
 
-```
-peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
-```
+    此步骤在docker-composer执行时即执行于cli容器之中,使用默认通道myc
+    执行的命令为：
 
-```
-peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
-```
+    ```
+    peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
+    ```
 
-## 事务执行过程：
-页面调用执行以'''捐款人-->捐资'''为例时，后端调用的命令如下：
+    ```
+    peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
+    ```
+
+## 事务执行模块
+
+页面调用执行以**捐款人-->捐资**为例时，后端调用的命令如下：
 
 ```
 peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C myc
@@ -110,8 +118,8 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 3. 应用程序 收集背书结果并将结果提交给Ordering服务节点
 4. Ordering服务节点执行共识过程并生成block，通过消息通道发布给Peer节点，由peer节点各自验证交易并提交到本地的ledger中（包括state状态的变化）
 
+## 事务调用
 
-## 事务调用示意图
 ![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
 
 组件／模块架构图说明@pujielan
@@ -127,70 +135,78 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 ## 组件／cli
 
 
+
+
 # <a name="如何变成自己的项目">如何变成自己的项目
 
-1. 编写自己的链码程序
-转变为自己的项目，就是重新更换链码,需要根据自己的具体业务进行链码文件的编写。下面看一下链码文件中的代码结构
+1. 编写自己的链码程序转变为自己的项目，就是重新更换链码,需要根据自己的具体业务进行链码文件的编写。下面看一下链码文件中的代码结构
 
-* 关键的引用：
+    * 关键引用：
 
-```
-"github.com/hyperledger/fabric/core/chaincode/shim"
-"github.com/hyperledger/fabric/protos/peer"
-```
+    ```
+    "github.com/hyperledger/fabric/core/chaincode/shim"
+    "github.com/hyperledger/fabric/protos/peer"
+    ```
 
-* func Init：
+    * func Init：
 
-```
-func (s *SmartContract) Init(api shim.ChaincodeStubInterface) peer.Response {
-	return shim.Success(nil)
-}
-```
-该方法作用于实例化链码时
+    ```
+    func (s *SmartContract) Init(api shim.ChaincodeStubInterface) peer.Response {
+	   return shim.Success(nil)
+    }
+    ```
 
-* 方法判断, func Invoke：
+    该方法作用于实例化链码时
 
-```
-func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
+    * 方法判断, func Invoke：
 
-	function, args := api.GetFunctionAndParameters()
+    ```
+    func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
 
-	switch function {
-	case "donation":
-		return s.donation(api, args)
-	case "queryDealOnce":
-		...
-	}
+	   function, args := api.GetFunctionAndParameters()
 
-	return shim.Error("Invalid function name.")
-}
-```
-作用于invoke调用时，对参数的处理。例如**-c '{"Args":["donation", "xxxx", "2000"]}'**中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
+	   switch function {
+	   case "donation":
+		  return s.donation(api, args)
+	   case "queryDealOnce":
+		  ...
+	   }
+
+	   return shim.Error("Invalid function name.")
+    }
+    ```
+
+    作用于invoke调用时，对参数的处理。例如`-c '{"Args":["donation", "xxxx", "2000"]}'`中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
 
 2. 把链码放置到容器中
-下载go环境镜像，编译链码，推荐本例中使用的name为chaincode的镜像进行
 
-```
-docker exec -it chaincode bash
-cd $yourProj
-go build
-```
-3. 修改docker-charity.yml文件
-* cli的entrypoint指令, 指定为你个人的chaincode
-* peer中的entrypoint指令,指定安装以及实例化你个人的chaincode
+    下载go环境镜像，编译链码，推荐本例中使用的name为chaincode的镜像进行
 
-3. 重新运行docker-compose文件
+    ```
+    docker exec -it chaincode bash
+    cd $yourProj
+    go build
+    ```
 
-```
-docker-composer -f docker-charity.yml up -d
-```
+3. 修改`docker-charity.yml`文件
+
+    * 将cli的entrypoint指令指定为你个人的chaincode
+    * peer中的entrypoint指令,指定安装以及实例化你个人的chaincode
+
+3. 运行docker-compose文件
+
+    ```
+    docker-composer -f docker-charity.yml up -d
+    ```
+
 4. 完成
-登入cli容器中，可以进行命令操作了
+
+    登入cli容器中，可以进行命令操作了
 
 5. webserver
-如果想要使用webserver接入，推荐使用java或者node来进行。
-因为虽然fabric项目由go开发，但是其本身并未提供go sdk... **[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)**，本例中的案例是调用了shell完成的处理并为进行go sdk的包装，或者推荐如下两go sdk项目以供参考：
-**[go sdk 1](https://github.com/hyperledger/fabric-sdk-go)**和**[go sdk 2](https://github.com/CognitionFoundry/gohfc)**
+
+    如果想要使用webserver接入，推荐使用java或者node来进行。
+    因为虽然fabric项目由go开发，但是其本身并未提供go sdk... **[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)**，本例调用了shell完成处理并为进行go sdk包装，或者推荐如下两go sdk项目以供参考：**[go sdk 1](https://github.com/hyperledger/fabric-sdk-go)**和**[go sdk 2](https://github.com/CognitionFoundry/gohfc)**
 
 
 # <a name="更新计划"></a>更新计划
