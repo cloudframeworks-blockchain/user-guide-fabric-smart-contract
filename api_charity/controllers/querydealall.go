@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"api_chraity/models"
+	"api_charity/models"
 	"fmt"
 
 	"github.com/astaxie/beego"

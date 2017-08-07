@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"api_chraity/controllers"
+	"api_charity/controllers"
 
 	"github.com/astaxie/beego"
 )

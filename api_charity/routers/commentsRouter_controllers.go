@@ -7,7 +7,7 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["api_chraity/controllers:DonationController"] = append(beego.GlobalControllerRouter["api_chraity/controllers:DonationController"],
+	beego.GlobalControllerRouter["api_charity/controllers:DonationController"] = append(beego.GlobalControllerRouter["api_charity/controllers:DonationController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,
@@ -15,7 +15,7 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
-	beego.GlobalControllerRouter["api_chraity/controllers:DonationRulsController"] = append(beego.GlobalControllerRouter["api_chraity/controllers:DonationRulsController"],
+	beego.GlobalControllerRouter["api_charity/controllers:DonationRulsController"] = append(beego.GlobalControllerRouter["api_charity/controllers:DonationRulsController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,
@@ -23,7 +23,7 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
-	beego.GlobalControllerRouter["api_chraity/controllers:QueryALLController"] = append(beego.GlobalControllerRouter["api_chraity/controllers:QueryALLController"],
+	beego.GlobalControllerRouter["api_charity/controllers:QueryALLController"] = append(beego.GlobalControllerRouter["api_charity/controllers:QueryALLController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,
@@ -31,7 +31,7 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
-	beego.GlobalControllerRouter["api_chraity/controllers:QueryOnceController"] = append(beego.GlobalControllerRouter["api_chraity/controllers:QueryOnceController"],
+	beego.GlobalControllerRouter["api_charity/controllers:QueryOnceController"] = append(beego.GlobalControllerRouter["api_charity/controllers:QueryOnceController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,
@@ -39,7 +39,7 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
-	beego.GlobalControllerRouter["api_chraity/controllers:UserInfoController"] = append(beego.GlobalControllerRouter["api_chraity/controllers:UserInfoController"],
+	beego.GlobalControllerRouter["api_charity/controllers:UserInfoController"] = append(beego.GlobalControllerRouter["api_charity/controllers:UserInfoController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,

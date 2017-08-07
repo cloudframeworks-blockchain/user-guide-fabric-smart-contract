@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "api_chraity/routers"
+	_ "api_charity/routers"
 
 	"github.com/astaxie/beego"
 )
