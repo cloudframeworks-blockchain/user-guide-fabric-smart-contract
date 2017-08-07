@@ -12,7 +12,7 @@
  
 目前主流智能合约设计包括[Ethereum](https://www.ethereum.org/)和[Fabric](https://www.ibm.com/blockchain/hyperledger.html)。其中**Fabric**即IBM HyperLedger，采用Go和Java实现，运行于Docker中，可支持业务复杂度更高。
 
-本篇[云框架](ABOUT.md)将以**基于Fabric的慈善捐款智能合约**为例，提供**基于区块链的智能合约**的最佳实践。
+本篇[云框架](ABOUT.md)将以**慈善机构**为例，提供通过Fabric实现**基于区块链的智能合约**系统的最佳实践。
 
 # 内容概览
 
@@ -46,7 +46,7 @@
     ```
     cd user-guide-blockchain/charity
     ```
-    
+
 4. 使用docker-compose运行如下命令
 
     ```
@@ -136,7 +136,6 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 
 
 
-
 # <a name="如何变成自己的项目">如何变成自己的项目
 
 1. 编写自己的链码程序转变为自己的项目，就是重新更换链码,需要根据自己的具体业务进行链码文件的编写。下面看一下链码文件中的代码结构
@@ -178,7 +177,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 
     作用于invoke调用时，对参数的处理。例如`-c '{"Args":["donation", "xxxx", "2000"]}'`中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
 
-2. 把链码放置到容器中
+2. 将链码放置于容器中
 
     下载go环境镜像，编译链码，推荐本例中使用的name为chaincode的镜像进行
 
