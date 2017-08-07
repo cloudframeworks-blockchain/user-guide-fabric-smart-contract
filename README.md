@@ -17,10 +17,10 @@
 # 内容概览
 
 * [快速部署](#快速部署)
-* [框架说明-业务](#框架说明-业务)
-* [框架说明-模块](#框架说明-模块)
-    * [预执行模块](#预执行模块)
-    * [事务执行模块](#事务执行模块)
+* [业务说明](#业务说明)
+* [框架说明](#框架说明)
+    * [预先执行](#预先执行)
+    * [事务执行](#事务执行)
     * [事务调用](#事务调用)
 * [如何变成自己的项目](#如何变成自己的项目)
 * [更新计划](#更新计划)
@@ -39,7 +39,7 @@
 2. 克隆完整代码
  
     ```
-    git clone https://github.com/cloudframeworks-blockchain/user-guide-blockchain
+    git clone https://github.com/cloudframeworks-blockchain/user-guide-fabric-smart-contract
     ```
     
 3. 进入charity目录
@@ -56,11 +56,11 @@
 
 5. 访问
 
+    @pujielan
 
+# <a name="业务说明"></a>业务说明
 
-# <a name="框架说明-业务"></a>框架说明-业务
-
-利用区块链技术实现智能合约，某慈善机构将原有捐款流程改造为**透明、易追溯**的智能捐款系统，用户可自主完成以下事务——
+利用区块链技术实现智能合约，某慈善机构将原有捐款流程升级改造为**透明、易追溯**的智能捐款系统，用户可自主完成以下事务——
 
 1. 注册、初始捐款
 2. 增加捐款额
@@ -69,35 +69,25 @@
 5. 查询捐款记录  
 6. 查询余额信息
 
+[查看事务命令](#事务命令)
+
 业务架构如下图所示：
 
-![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric_struct.png)
+@pujielan
 
-* 完整的Hyperledger Fabric1.0结构
-* 暂未使用favric-ca插件
-* order
-* peer
-* cli
+# <a name="框架说明"></a>框架说明
 
-# <a name="框架说明-模块"></a>框架说明-模块
+## <a name="预先执行"></a>预先执行
 
-## <a name="预执行模块"></a>预执行模块
+在事务执行前需预先执行**启动链码**及**安装链码与实例化**（本例已在docker compose执行中完成）
 
-1. 启动链码(chaincode)
-
-    此步骤在docker-compose执行时即执行于chaincode容器之中
-    执行的命令为：
+1. 启动链码（chaincode），执行于chaincode容器中，在此阶段与任何channel都不相关，命令如下：
 
     ```
     CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 ./charity
     ```
-    
-    在此阶段，链码与任何channel都不相关, 需要在后续步骤中使用实例化
 
-2. 安装链码与实例化
-
-    此步骤在docker-composer执行时即执行于cli容器之中,使用默认通道myc
-    执行的命令为：
+2. 安装链码与实例化，执行于cli容器中，使用默认通道myc，命令如下：
 
     ```
     peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
@@ -107,43 +97,41 @@
     peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
     ```
 
-## <a name="事务执行模块"></a>事务执行模块
+## <a name="事务执行"></a>事务执行
 
-页面调用执行以**捐款人-->捐资**为例时，后端调用的命令如下：
+本例中包含<a name="事务命令"></a>事务命令如下：
+
+@pujielan 命令列举
+
+事务命令可以组合，例如执行捐款人（mike）捐献（donation）资金（2000）时，后段调用命令如下：
 
 ```
-peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C myc
+peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "2000"]}' -C myc
 ```
+
+具体流程见下图：
+
 ![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/running.png)
 
-流程如下：
+[点击查看详细流程图](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric_struct.png)
 
-1. 应用程序请求道Peer节点（一个或多个）
-2. peer节点分别执行交易（通过chaincode），但是并不将执行结果提交到本地的账本中（可以认为是模拟执行，交易处于挂起状态），参与背书的peer将执行结果返回给应用程序（其中包括自身对背书结果的签名）
-3. 应用程序 收集背书结果并将结果提交给Ordering服务节点
-4. Ordering服务节点执行共识过程并生成block，通过消息通道发布给Peer节点，由peer节点各自验证交易并提交到本地的ledger中（包括state状态的变化）
+* peer @pujielan
+* oderer @pujielan
+* cli @pujielan
+* 应用程序请求道Peer节点（一个或多个）
+* peer节点分别执行交易（通过chaincode），但是并不将执行结果提交到本地的账本中（可以认为是模拟执行，交易处于挂起状态），参与背书的peer将执行结果返回给应用程序（其中包括自身对背书结果的签名）
+* 应用程序 收集背书结果并将结果提交给Ordering服务节点
+* Ordering服务节点执行共识过程并生成block，通过消息通道发布给Peer节点，由peer节点各自验证交易并提交到本地的ledger中（包括state状态的变化）
 
 ## <a name="事务调用"></a>事务调用
 
 ![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
 
-组件／模块架构图说明@pujielan
-
-## 组件／peer
-
-
-
-## 组件／orderer
-
-
-
-## 组件／cli
-
-
+事务调用说明 @pujielan
 
 # <a name="如何变成自己的项目">如何变成自己的项目
 
-1. 根据具体业务编写链码文件，结构参考：
+1. 根据具体业务编写链码文件，结构参考：@pujielan 说明清楚一些
 
     * 关键引用
 
@@ -207,8 +195,8 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 
 5. webserver
 
-    如果想要使用webserver接入，推荐使用java或者node来进行。
-    因为虽然fabric项目由go开发，但是其本身并未提供go sdk... **[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)**，本例调用了shell完成处理并为进行go sdk包装，或者推荐如下两go sdk项目以供参考：**[go sdk 1](https://github.com/hyperledger/fabric-sdk-go)**和**[go sdk 2](https://github.com/CognitionFoundry/gohfc)**
+    如虽然Fabric使用go开发，但是其本身并未提供go sdk（[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)），因此建议使用Java或Node实现webserver接入。
+    本例调用了shell完成处理并为进行go sdk包装，您也可以参考一些go sdk项目，如[fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)、[gohfc](https://github.com/CognitionFoundry/gohfc)等。
 
 # <a name="更新计划"></a>更新计划
 
