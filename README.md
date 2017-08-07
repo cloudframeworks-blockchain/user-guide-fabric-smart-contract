@@ -18,10 +18,10 @@
 
 * [快速部署](#快速部署)
 * [框架说明-业务](#框架说明-业务)
-* [框架说明-组件](#框架说明-组件)
-    * [区块链](#区块链)
-    * [智能合约](#智能合约)
-    * [业务前端](#业务前端)
+* [框架说明-模块](#框架说明-模块)
+    * [预执行模块](#预执行模块)
+    * [事务执行模块](#事务执行模块)
+    * [事务调用](#事务调用)
 * [如何变成自己的项目](#如何变成自己的项目)
 * [更新计划](#更新计划)
 * [社群贡献](#社群贡献)
@@ -34,14 +34,15 @@
 
 ## 本地部署
 
-1. [准备Docker环境]()
+1. [准备Docker环境](./READMORE/install-docker.md)
+
 2. 克隆完整代码
  
     ```
-    git clone 
+    git clone https://github.com/cloudframeworks-blockchain/user-guide-blockchain
     ```
     
-3. 进入项目下的charity目录
+3. 进入charity目录
 
     ```
     cd user-guide-blockchain/charity
@@ -53,9 +54,13 @@
     docker-compose -f docker-charity.yml up -d
     ```
 
+5. 访问
+
+
+
 # <a name="框架说明-业务"></a>框架说明-业务
 
-利用区块链技术实现智能合约，某慈善机构将原有捐款流程改造为透明、易追溯的智能捐款系统，可完成以下事务——
+利用区块链技术实现智能合约，某慈善机构将原有捐款流程改造为**透明、易追溯**的智能捐款系统，用户可自主完成以下事务——
 
 1. 注册、初始捐款
 2. 增加捐款额
@@ -76,7 +81,7 @@
 
 # <a name="框架说明-模块"></a>框架说明-模块
 
-## 预执行模块
+## <a name="预执行模块"></a>预执行模块
 
 1. 启动链码(chaincode)
 
@@ -102,7 +107,7 @@
     peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
     ```
 
-## 事务执行模块
+## <a name="事务执行模块"></a>事务执行模块
 
 页面调用执行以**捐款人-->捐资**为例时，后端调用的命令如下：
 
@@ -118,7 +123,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 3. 应用程序 收集背书结果并将结果提交给Ordering服务节点
 4. Ordering服务节点执行共识过程并生成block，通过消息通道发布给Peer节点，由peer节点各自验证交易并提交到本地的ledger中（包括state状态的变化）
 
-## 事务调用
+## <a name="事务调用"></a>事务调用
 
 ![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
 
@@ -138,16 +143,16 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 
 # <a name="如何变成自己的项目">如何变成自己的项目
 
-1. 编写自己的链码程序转变为自己的项目，就是重新更换链码,需要根据自己的具体业务进行链码文件的编写。下面看一下链码文件中的代码结构
+1. 根据具体业务编写链码文件，结构参考：
 
-    * 关键引用：
+    * 关键引用
 
     ```
     "github.com/hyperledger/fabric/core/chaincode/shim"
     "github.com/hyperledger/fabric/protos/peer"
     ```
 
-    * func Init：
+    * func Init（作用于链码实例化）
 
     ```
     func (s *SmartContract) Init(api shim.ChaincodeStubInterface) peer.Response {
@@ -155,9 +160,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
     }
     ```
 
-    该方法作用于实例化链码时
-
-    * 方法判断, func Invoke：
+    * func Invoke（方法判断，作用于invoke调用时对参数的处理）
 
     ```
     func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
@@ -175,7 +178,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
     }
     ```
 
-    作用于invoke调用时，对参数的处理。例如`-c '{"Args":["donation", "xxxx", "2000"]}'`中，即调用了donation方法执行了后续业务处理。可以理解为，在写自己的链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
+    例如`-c '{"Args":["donation", "xxxx", "2000"]}'`中，即调用了donation方法执行了后续业务处理。可理解为，在写链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
 
 2. 将链码放置于容器中
 
@@ -206,7 +209,6 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "xxxx", "2000"]}' -C m
 
     如果想要使用webserver接入，推荐使用java或者node来进行。
     因为虽然fabric项目由go开发，但是其本身并未提供go sdk... **[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)**，本例调用了shell完成处理并为进行go sdk包装，或者推荐如下两go sdk项目以供参考：**[go sdk 1](https://github.com/hyperledger/fabric-sdk-go)**和**[go sdk 2](https://github.com/CognitionFoundry/gohfc)**
-
 
 # <a name="更新计划"></a>更新计划
 
