@@ -45,7 +45,7 @@
 3. 进入charity目录
 
     ```
-    cd user-guide-blockchain/charity
+    cd user-guide-blockchain/chaincode-docker-devmode
     ```
 
 4. 使用docker-compose运行如下命令
@@ -81,7 +81,7 @@
 
 在事务执行前需预先执行**启动链码**及**安装链码与实例化**（本例已在docker compose执行中完成）
 
-1. 启动链码（chaincode），执行于chaincode容器中，在此阶段与任何channel都不相关，命令如下：
+1. 启动链码（chaincode），执行于chaincode容器中，命令如下：
 
     ```
     CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 ./charity
@@ -223,7 +223,22 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "40000"]}' -C 
     ```
 
 3. 修改`docker-charity.yml`文件
+    
+    * 修改**user-guide-blockchain/chaincode-docker-devmode/script.sh**中的channel注册与chaincode实例化
 
+    ```
+    peer channel create -c myc -f myc.tx -o orderer:7050
+
+    peer channel join -b myc.block
+
+    sleep 10
+    
+    CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 /opt/gopath/src/           chaincodedev/chaincode/charity/charity &
+    
+    peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
+    
+    peer chaincode instantiate -n charity -v 0 -c '{"Args":[]}' -C myc
+    ```
     * 将cli的entrypoint指令指定为你个人的chaincode
     * peer中的entrypoint指令,指定安装以及实例化你个人的chaincode
 
