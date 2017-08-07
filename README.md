@@ -135,36 +135,36 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "2000"]}' -C m
 
     * 关键引用
 
-    ```
-    "github.com/hyperledger/fabric/core/chaincode/shim"
-    "github.com/hyperledger/fabric/protos/peer"
-    ```
+        ```
+        "github.com/hyperledger/fabric/core/chaincode/shim"
+        "github.com/hyperledger/fabric/protos/peer"
+        ```
 
     * func Init（作用于链码实例化）
 
-    ```
-    func (s *SmartContract) Init(api shim.ChaincodeStubInterface) peer.Response {
-	   return shim.Success(nil)
-    }
-    ```
+        ```
+        func (s *SmartContract) Init(api shim.ChaincodeStubInterface) peer.Response {
+	       return shim.Success(nil)
+        }
+        ```
 
     * func Invoke（方法判断，作用于invoke调用时对参数的处理）
 
-    ```
-    func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
+        ```
+        func (s *SmartContract) Invoke(api shim.ChaincodeStubInterface) peer.Response {
 
-	   function, args := api.GetFunctionAndParameters()
+	       function, args := api.GetFunctionAndParameters()
 
-	   switch function {
-	   case "donation":
-		  return s.donation(api, args)
-	   case "queryDealOnce":
-		  ...
-	   }
+	       switch function {
+	       case "donation":
+		      return s.donation(api, args)
+	       case "queryDealOnce":
+		      ...
+	       }
 
-	   return shim.Error("Invalid function name.")
-    }
-    ```
+	       return shim.Error("Invalid function name.")
+        }
+        ```
 
     例如`-c '{"Args":["donation", "xxxx", "2000"]}'`中，即调用了donation方法执行了后续业务处理。可理解为，在写链码程序时这里即是需要按照自己的业务进行修改的合约逻辑。
 
