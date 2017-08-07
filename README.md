@@ -108,45 +108,45 @@
 
 事务命令可以组合，例如
 
-执行捐款人（mike）捐献（donation）资金（2000）时，后段调用命令如下：
+* 执行捐款人（mike）捐献（donation）资金（2000）时，后段调用命令如下：
 
-```
-peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "2000"]}' -C myc
-```
-查询捐款人(mike)账户信息
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "2000"]}' -C myc
+  ```
+* 查询捐款人(mike)账户信息
 
-```
-peer chaincode invoke -n charity -c '{"Args":["queryUserInfo", "mike"]}' -C myc
-```
-捐款人(mike)发生捐款指定捐赠“希望小学”
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["queryUserInfo", "mike"]}' -C myc
+  ```
+* 捐款人(mike)发生捐款指定捐赠“希望小学”
 
-```
-peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","assign", "Hope_ Primary_School"]}' -C myc
-```
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","assign", "Hope_ Primary_School"]}' -C myc
+  ```
 
-捐款人(mike)随机选款，由慈善机构的合约进行选择捐赠
+* 捐款人(mike)随机选款，由慈善机构的合约进行选择捐赠
 
-```
-peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","random"]}' -C myc
-```
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","random"]}' -C myc
+  ```
 
-捐款人(mike)查询的捐款次数和去向
+* 捐款人(mike)查询的捐款次数和去向
 
-```
-peer chaincode invoke -n charity -c '{"Args":["queryDealALL", "mike"]}' -C myc
-```
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["queryDealALL", "mike"]}' -C myc
+  ```
 
-捐款人(mike)查询自己的第2次捐款去向
+* 捐款人(mike)查询自己的第2次捐款去向
 
-```
-peer chaincode invoke -n charity -c '{"Args":["queryDealOnce", "mike", "2"]}' -C myc
-```
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["queryDealOnce", "mike", "2"]}' -C  myc
+  ```
 
-捐款人(mike)追加捐款40000元
+* 捐款人(mike)追加捐款40000元
 
-```
-peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "40000"]}' -C myc
-```
+  ```
+  peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "40000"]}' -C myc
+  ```
 
 
 具体流程见下图：
