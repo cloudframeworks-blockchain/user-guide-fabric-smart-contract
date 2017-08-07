@@ -233,7 +233,7 @@
 
     sleep 10
     
-    CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 /opt/gopath/src/           chaincodedev/chaincode/charity/charity &
+    CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=charity:0 /opt/gopath/src/chaincodedev/chaincode/charity/charity &
     
     peer chaincode install -p chaincodedev/chaincode/charity -n charity -v 0
     
@@ -245,6 +245,7 @@
 3. 运行docker-compose文件
 
     ```
+    bash init_tx.sh
     docker-composer -f docker-charity.yml up -d
     ```
 
