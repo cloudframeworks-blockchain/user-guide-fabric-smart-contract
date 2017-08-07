@@ -207,7 +207,7 @@ peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "2000"]}' -C m
 
 # <a name="社群贡献"></a>社群贡献
 
-+ QQ群: 
++ QQ群: 644955229
 + [参与贡献](CONTRIBUTING.md)
 + [联系我们](mailto:info@goodrain.com)
 
