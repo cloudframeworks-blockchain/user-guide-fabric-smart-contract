@@ -51,7 +51,7 @@
 4. 使用docker-compose运行如下命令
 
     ```
-    docker-compose -f docker-charity.yml up -d
+    docker-compose -f docker-charity.yaml up -d
     ```
 
 5. 访问
