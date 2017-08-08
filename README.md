@@ -166,7 +166,7 @@
 
 其次，peers将针对交易读集执行版本检查，以确保数据的完整性，并防止双花等威胁。Hyperledger Fabric具有并发控制，其中transaction并行执行（通过背书节点）以增加吞吐量，并且在提交（由所有peers）每个transaction时，每个transaction都被验证，以确保没有其他transaction已经修改了已读取的数据。换句话说，它确保在chaincode执行（背书）期间需要读取的数据没有改变，因此执行结果有效，并且可以提交到账本状态数据库。如果读取的数据已被其他transaction更改，则块中的transaction被标记为无效，并且不会写入账本状态数据库。客户端应用程序被提醒，然后可以控制错误或重新尝试。
 
-进一步了解**[Transation Flow](http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html)**
+进一步了解[Transation Flow](http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html)
 
 # <a name="如何变成自己的项目">如何变成自己的项目
 
