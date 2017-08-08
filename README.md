@@ -164,7 +164,9 @@
 
 在交付之前，peers将验证交易。首先，他们将检查背书策略，以确保指定peer已经对结果进行了签名，并且将根据交易有效负载来验证签名。
 
-其次，peers将针对交易读集执行版本检查，以确保数据的完整性，并防止双花等威胁。Hyperledger Fabric具有并发控制，其中transaction并行执行（通过背书节点）以增加吞吐量，并且在提交（由所有peers）每个transaction时，每个transaction都被验证，以确保没有其他transaction已经修改了已读取的数据。换句话说，它确保在chaincode执行（背书）期间需要读取的数据没有改变，因此执行结果有效，并且可以提交到账本状态数据库。如果读取的数据已被其他transaction更改，则块中的transaction被标记为无效，并且不会写入账本状态数据库。客户端应用程序被提醒，然后可以控制错误或重新尝试。**[Transation Flow](http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html)**
+其次，peers将针对交易读集执行版本检查，以确保数据的完整性，并防止双花等威胁。Hyperledger Fabric具有并发控制，其中transaction并行执行（通过背书节点）以增加吞吐量，并且在提交（由所有peers）每个transaction时，每个transaction都被验证，以确保没有其他transaction已经修改了已读取的数据。换句话说，它确保在chaincode执行（背书）期间需要读取的数据没有改变，因此执行结果有效，并且可以提交到账本状态数据库。如果读取的数据已被其他transaction更改，则块中的transaction被标记为无效，并且不会写入账本状态数据库。客户端应用程序被提醒，然后可以控制错误或重新尝试。
+
+进一步了解**[Transation Flow](http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html)**
 
 # <a name="如何变成自己的项目">如何变成自己的项目
 
@@ -217,7 +219,7 @@
 
 3. 修改`docker-charity.yml`文件
     
-    * 修改**user-guide-blockchain/chaincode-docker-devmode/script.sh**中的channel注册与chaincode实例化
+    * 修改[script.sh](https://github.com/cloudframeworks-blockchain/user-guide-fabric-smart-contract/blob/master/chaincode-docker-devmode/script.sh)中的channel注册与chaincode实例化
 
     ```
     peer channel create -c myc -f myc.tx -o orderer:7050
@@ -253,8 +255,9 @@
 
 # <a name="更新计划"></a>更新计划
 
-* `文档` 
-* `组件` 
+* `文档` 内容扩展
+* `CODE` 增加自建go sdk
+* `CODE` 优化展示界面 
 
 点击查看[历史更新](CHANGELOG.md)
 
