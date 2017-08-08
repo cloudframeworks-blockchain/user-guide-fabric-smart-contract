@@ -51,7 +51,7 @@
 4. 使用docker-compose运行如下命令
 
     ```
-    docker-compose -f docker-charity.yaml up -d
+    docker-compose -f docker-charity.yaml up -d
     ```
 
 5. 访问
@@ -104,9 +104,7 @@
 
 ## <a name="事务执行"></a>事务执行
 
-本例中包含<a name="事务命令"></a>事务命令如下：
-
-事务命令可以组合，例如
+本例中包含<a name="事务命令"></a>事务命令可根据实际情况组合，示例如下：
 
 * 执行捐款人（mike）捐献（donation）资金（2000）时，后段调用命令如下：
 
