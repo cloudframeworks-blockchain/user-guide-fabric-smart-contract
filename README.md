@@ -153,9 +153,7 @@
 
 [点击查看详细流程图](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric_struct.png)
 
-* peer @pujielan
-* oderer @pujielan
-* cli @pujielan
+* [Cli & Peer & Oderer](https://hyperledger-fabric.readthedocs.io/en/latest/arch-deep-dive.html#client)
 * 应用程序请求道Peer节点（一个或多个）
 * peer节点分别执行交易（通过chaincode），但是并不将执行结果提交到本地的账本中（可以认为是模拟执行，交易处于挂起状态），参与背书的peer将执行结果返回给应用程序（其中包括自身对背书结果的签名）
 * 应用程序 收集背书结果并将结果提交给Ordering服务节点
