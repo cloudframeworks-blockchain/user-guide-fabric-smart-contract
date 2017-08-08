@@ -28,10 +28,6 @@
 
 # <a name="快速部署"></a>快速部署
 
-## 一键部署
-
-[一键部署至好雨云帮]()
-
 ## 本地部署
 
 1. [准备Docker环境](./READMORE/install-docker.md)
@@ -56,7 +52,9 @@
 
 5. 访问
 
-    http://127.0.0.1:8080/swagger
+    http://127.0.0.1:8080/swagger        点击`try it out`填写事务命令进行操作
+    
+    或在终端执行命令`docker exec -it cli bash`进入shell后执行相应事务
 
 # <a name="业务说明"></a>业务说明
 
@@ -71,9 +69,9 @@
 
 [查看事务命令](#事务命令)
 
-业务架构如下图所示：
+业务流程如下图所示：
 
-![](https://github.com/cloudframeworks-blockchain/user-guide-fabric-smart-contract/blob/master/image/business.jpeg)
+![](./image/business.png)
 
 # <a name="框架说明"></a>框架说明
 
@@ -146,12 +144,11 @@
   peer chaincode invoke -n charity -c '{"Args":["donation", "mike", "40000"]}' -C myc
   ```
 
-
 具体流程见下图：
 
-![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/running.png)
+![](./image/transaction-flow.png)
 
-[点击查看详细流程图](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric_struct.png)
+[点击查看详细流程图](./image/fabric_struct.png)
 
 * [Cli & Peer & Oderer](https://hyperledger-fabric.readthedocs.io/en/latest/arch-deep-dive.html#client)
 * 应用程序请求道Peer节点（一个或多个）
@@ -161,7 +158,7 @@
 
 ## <a name="事务调用"></a>事务调用
 
-![](https://github.com/cloudframeworks-blockchain/user-guide-blockchain/blob/master/image/fabric%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84.png)
+![](./image/transaction-flow-details.png)
 
 交易流程由应用客户端发送给特定背书节点的transaction proposal组成。背书节点验证客户端签名，并执行chaincode功能来模拟transaction。输出是链码结果，在链码（读集）中读取的一组键/值版本以及以链码（写集）编写的一组键/值。带有背书签名的proposal响应将被发送回客户端。 客户端将签名装配到transaction有效负载中并将其广播到ordering服务。ordering服务将有序交易作为块传送到这个通道上的所有peers。
 
