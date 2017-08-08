@@ -44,7 +44,7 @@ services:
 
   cli:
     container_name: cli
-    image: pujielan/fabric_cli:x86_64-1.0.0
+    image: goodraincloudframeworks/fabric_cli:x86_64-1.0.0
     tty: true
     environment:
       - GOPATH=/opt/gopath
