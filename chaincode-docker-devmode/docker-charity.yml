@@ -11,7 +11,7 @@ services:
       - ORDERER_GENERAL_GENESISFILE=orderer.block
       - ORDERER_GENERAL_LOCALMSPID=DEFAULT
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp
-      - GRPC_TRACE=all=true,
+      - GRPC_TRACE=all=true
       - GRPC_VERBOSITY=debug
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
