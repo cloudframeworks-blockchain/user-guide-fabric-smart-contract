@@ -1,12 +1,13 @@
-FROM hyperledger/fabric-ccenv:x86_64-1.0.0
+FROM goodraincloudframeworks/fabric_cli:x86_64-1.0.0
 
-RUN go get -u github.com/astaxie/beego && \
-        go get -u github.com/beego/bee 
-COPY ./api_charity/ ${GOPATH}/src/api_charity
+RUN mkdir -p /etc/hyperledger/msp
+COPY ./chaincode-docker-devmode/msp /etc/hyperledger/msp
+
+COPY ./chaincode-docker-devmode /opt/gopath/src/chaincodedev
+COPY ./chaincode /opt/gopath/src/chaincodedev/chaincode
+
+WORKDIR /opt/gopath/src/chaincodedev
 
 EXPOSE 8080
-
-WORKDIR ${GOPATH}/src/api_charity
-
-CMD bee run 
+CMD /bin/bash -c './script.sh'
 
