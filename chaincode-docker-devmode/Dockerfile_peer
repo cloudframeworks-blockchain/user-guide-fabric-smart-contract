@@ -5,5 +5,5 @@ COPY ./msp/ /etc/hyperledger/msp
 
 WORKDIR /opt/gopath/src/github.com/hyperledger/fabric/peer
 
-ENTRYPOINT "peer node start --peer-chaincodedev=true -o orderer:7050"
+CMD peer node start --peer-chaincodedev=true -o orderer:7050
 

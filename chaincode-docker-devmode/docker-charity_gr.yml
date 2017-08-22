@@ -3,13 +3,13 @@ version: '2'
 services:
   orderer:
     container_name: orderer
-    image: pujielan/fabric_orderer:V1.0
+    image: goodraincloudframeworks/fabric_orderer:V1.0
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
-      - ORDERER_GENERAL_LISTENADDRESS=orderer
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=orderer.block
       - ORDERER_GENERAL_LOCALMSPID=DEFAULT
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp
       - GRPC_TRACE=all=true
       - GRPC_VERBOSITY=debug
@@ -19,13 +19,13 @@ services:
       - 7050:7050
   peer:
     container_name: peer
-    image: pujielan/fabric_peer:V1.0
+    image: goodraincloudframeworks/fabric_peer:V1.0
     environment:
       - CORE_PEER_ID=peer
       - CORE_PEER_ADDRESS=peer:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer:7051
       - CORE_PEER_LOCALMSPID=DEFAULT
-      #- CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=info
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
@@ -38,11 +38,11 @@ services:
 
   cli:
     container_name: cli
-    image: pujielan/fabric_cli:V1.0
+    image: goodraincloudframeworks/fabric_cli:V1.1
     tty: true
     environment:
       - GOPATH=/opt/gopath
-      #- CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=info
       - CORE_PEER_ID=cli
       - CORE_PEER_ADDRESS=peer:7051
@@ -58,12 +58,11 @@ services:
 
   chaincode:
     container_name: chaincode
-    #image: hyperledger/fabric-ccenv:x86_64-1.0.0
-    image: pujielan/fabric_chain:x86_64-1.0.0
+    image: hyperledger/fabric-ccenv:x86_64-1.0.0
     tty: true
     environment:
       - GOPATH=/opt/gopath
-      #- CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=info
       - CORE_PEER_ID=example02
       - CORE_PEER_ADDRESS=peer:7051
