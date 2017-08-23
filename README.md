@@ -12,7 +12,7 @@
  
 目前主流智能合约设计包括[Ethereum](https://www.ethereum.org/)和[Fabric](https://www.ibm.com/blockchain/hyperledger.html)。其中**Fabric**即IBM HyperLedger，采用Go和Java实现，运行于Docker中，可支持业务复杂度更高。
 
-本篇[云框架](ABOUT.md)将以**慈善机构**为例，提供通过Fabric实现**基于区块链的智能合约**系统的最佳实践。
+本篇[云框架](ABOUT.md)将以**慈善募捐**为例，提供通过Fabric实现**基于区块链的智能合约**系统的最佳实践。
 
 # 内容概览
 
