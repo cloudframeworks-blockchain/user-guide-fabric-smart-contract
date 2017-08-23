@@ -47,7 +47,7 @@
 3. 进入charity目录
 
     ```
-    cd user-guide-blockchain/chaincode-docker-devmode
+    cd user-guide-fabric-smart-contract/chaincode-docker-devmode
     ```
 
 4. 使用docker-compose运行如下命令
