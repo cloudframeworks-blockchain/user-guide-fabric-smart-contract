@@ -4,6 +4,6 @@
 
 ## 出品人
 
-**[yscing](https://github.com/ysicing)**
+**[Gemrails](https://github.com/Gemrails)**
 
 
