@@ -123,7 +123,7 @@
 * 捐款人(mike)发生捐款指定捐赠“希望小学”
 
   ```
-  peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","assign", "Hope_ Primary_School"]}' -C myc
+  peer chaincode invoke -n charity -c '{"Args":["donationRules", "mike","assign", "Hope_Primary_School"]}' -C myc
   ```
 
 * 捐款人(mike)随机选款，由慈善机构的合约进行选择捐赠
@@ -256,7 +256,7 @@
 
 5. webserver
 
-    如虽然Fabric使用go开发，但是其本身并未提供go sdk（[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)），因此建议使用Java或Node实现webserver接入。
+    如虽然Fabric使用go开发，但是其官方并未提供go sdk（[Hyperledger Fabric SDKs](http://hyperledger-fabric.readthedocs.io/en/latest/fabric-sdks.html?highlight=sdk)），因此建议使用Java或Node实现webserver接入。
     本例调用了shell完成处理并为进行go sdk包装，您也可以参考一些go sdk项目，如[fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)、[gohfc](https://github.com/CognitionFoundry/gohfc)等。
 
 # <a name="更新计划"></a>更新计划
