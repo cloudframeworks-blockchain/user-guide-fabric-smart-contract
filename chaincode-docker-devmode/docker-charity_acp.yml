@@ -48,7 +48,8 @@ services:
       - CORE_PEER_ADDRESS=peer:7051
       - CORE_PEER_LOCALMSPID=DEFAULT
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
-      - ORDERER_GENERAL_ADDRESS=orderer:7050
+      - ORDERER_GENERAL_PORT=7050
+      - ORDERER_GENERAL_HOST=orderer
     working_dir: /opt/gopath/src/chaincodedev
     command: /bin/bash -c './script.sh' 
     ports:
