@@ -17,7 +17,7 @@ done
 
 # first we create the channel against the specified configuration in myc.tx
 # this call returns a channel configuration block - myc.block - to the CLI container
-peer channel create -c myc -f myc.tx -o ${ORDERER_GENERAL_ADDRESS}
+peer channel create -c myc -f myc.tx -o ${ORDERER_GENERAL_HOST}:${ORDERER_GENERAL_PORT}
 
 # now we will join the channel and start the chain with myc.block serving as the
 # channel's first block (i.e. the genesis block)
