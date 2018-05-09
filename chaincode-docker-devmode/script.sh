@@ -7,6 +7,11 @@ set -x
 # This script expedites the chaincode development process by automating the
 # requisite channel create/join commands
 
+until nc -z ${ORDERER_GENERAL_HOST} 7050; do
+    echo "waiting for orderer..."
+    sleep 1
+done
+
 # We use a pre-generated orderer.block and channel transaction artifact (myc.tx),
 # both of which are created using the configtxgen tool
 
